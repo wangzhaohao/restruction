@@ -24,8 +24,8 @@
   [velocity_poroperty]
     type = ConservativePorosity
     variable = porosity 
-    upwinding_type = none
-#    coeff_vector = '1000 0 0'
+    upwinding_type = full
+    coeff_vector = '1000 0 0'
   []
   [velocity_timeDe]
     type = MassLumpedTimeDerivative
