@@ -21,6 +21,7 @@ ConservativePorosity::validParams()
 	// params.addRequiredCoupledVar("velocity", "Velocity vector");
 	RealVectorValue coeff_vector(1, 0, 0); // set a defult coefficient vector
 	params.addParam<RealVectorValue>("coeff_vector", coeff_vector, "coefficient vector"); // 测试是否是因为速度变量的类型的关系，个人觉得不是。测试结果没有什么区别（2022.12.02）
+	params.addParam<MaterialPropertyName>("velocity_porosity", 1, "the porosity velocity value(vp)");
   MooseEnum upwinding_type("none full", "none");
   params.addParam<MooseEnum>("upwinding_type",
                              upwinding_type,
