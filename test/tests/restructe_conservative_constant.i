@@ -3,14 +3,12 @@
 # or use the GenericFunctionMaterial to setting velocity_porosity
 
 [Mesh]
-  coord_type = RZ
+#  coord_type = RZ
   [block]
     type = GeneratedMeshGenerator
     dim = 2
     nx = 100
     ny = 1
-    xmax = 5e-3
-    ymax = 1e-3
   []
 []
 
@@ -30,10 +28,10 @@
     coeff_vector = '1 0 0'
     velocity_porosity = velocity_porosity
   []
-  [velocity_timeDe]
-    type = MassLumpedTimeDerivative
-    variable = porosity 
-  []
+#  [velocity_timeDe]
+#    type = MassLumpedTimeDerivative
+#    variable = porosity 
+#  []
 []
 
 [AuxVariables]
@@ -48,11 +46,11 @@
 []
 
 [AuxKernels] 
-  [temp_function_aux]
-    type = FunctionAux
-    function = temp_function
-    variable = temp
-  []
+#  [temp_function_aux]
+#    type = FunctionAux
+#    function = temp_function
+#    variable = temp
+#  []
   [velocity_porosity_aux]
     type = MaterialRealAux
     property = velocity_porosity
@@ -61,13 +59,13 @@
 []
 
 [Functions]
-  [temp_function]
-    type = ParsedFunction
-    value = -6190.60166*x-8.05175e7*x*x-8.10883e9*x*x*x+1.48088e12*x*x*x*x+2910.26613
-  []
+#  [temp_function]
+#    type = ParsedFunction
+#    value = -6190.60166*x-8.05175e7*x*x-8.10883e9*x*x*x+1.48088e12*x*x*x*x+2910.26613
+#  []
   [velocity_porosity_functon]
     type = ParsedFunction
-    value = 1e-4*(1+x)
+    value = 2*x+1
   []
 []
 
@@ -89,29 +87,35 @@
 []
 
 [BCs]
-  [right_flow]
-    type = OutflowBC
+#  [right_flow]
+#    type = OutflowBC
+#    variable = porosity
+#    velocity = '0 0 0'
+#    boundary = right
+#  []
+#  [left_flow]
+#    type = OutflowBC
+#    variable = porosity
+#    velocity = '0 0 0'
+#    boundary = left
+#  []
+  [right_dirichlet]
+    type = DirichletBC
     variable = porosity
-    velocity = '0 0 0'
+    value = 1
     boundary = right
-  []
-  [left_flow]
-    type = OutflowBC
-    variable = porosity
-    velocity = '0 0 0'
-    boundary = left
   []
 []
 
 [Executioner]
-  type = Transient
+  type = Steady
   
   solve_type = JFNK
-  num_steps = 100
-  dt = 60
-
-  nl_rel_tol = 1e-6
-  nl_abs_tol = 1e-5
+#  num_steps = 100
+#  dt = 60
+#
+#  nl_rel_tol = 1e-6
+#  nl_abs_tol = 1e-5
 
 #  petsc_options_iname = '-ksp_gmres_restart -pc_type -pc_hypre_type -pc_hypre_boomeramg_max_iter'
 #  petsc_options_value = '201                hypre    boomeramg      4'
