@@ -6,7 +6,9 @@
 []
 
 [Variables]
-  [u][]
+  [u]
+    initial_condition = 1.0
+  []
 []
 
 [Kernels]
@@ -16,22 +18,26 @@
     variable = u
     velocity_porosity = velocity_porosity
   []
+  [time]
+    type = TimeDerivative
+    variable = u
+  []
 []
 
-[BCs]
-  [u_right]
-    type = DirichletBC
-    variable = u
-    value = 1
-    boundary = right
-  []
-  [u_left]
-    type = DirichletBC
-    value = 1.5
-    variable = u
-    boundary = left
-  []
-[]
+#[BCs]
+#  [u_right]
+#    type = DirichletBC
+#    variable = u
+#    value = 1
+#    boundary = right
+#  []
+#  [u_left]
+#    type = DirichletBC
+#    value = 1.5
+#    variable = u
+#    boundary = left
+#  []
+#[]
 
 [Materials]
   [velocity_porosity_material]
@@ -49,8 +55,10 @@
 []
 
 [Executioner]
-  type = Steady
+  type = Transient
   solve_type = PJFNK
+  dt = 1
+  num_steps = 6
 []
 
 [Outputs]

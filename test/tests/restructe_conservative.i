@@ -25,10 +25,10 @@
     type = ConservativePorosity
     variable = porosity 
     upwinding_type = full
-    coeff_vector = '1000 0 0'
+    coeff_vector = '-10 0 0'
   []
   [velocity_timeDe]
-    type = MassLumpedTimeDerivative
+    type = TimeDerivative
     variable = porosity 
   []
 []
@@ -71,25 +71,25 @@
   []
 []
 
-[BCs]
-  [right_flow]
-    type = OutflowBC
-    variable = porosity
-    velocity = '0 0 0'
-    boundary = right
-  []
-  [left_flow]
-    type = OutflowBC
-    variable = porosity
-    velocity = '0 0 0'
-    boundary = left
-  []
-[]
+#[BCs]
+#  [right_flow]
+#    type = OutflowBC
+#    variable = porosity
+#    velocity = '0 0 0'
+#    boundary = right
+#  []
+#  [left_flow]
+#    type = OutflowBC
+#    variable = porosity
+#    velocity = '0 0 0'
+#    boundary = left
+#  []
+#[]
 
 [Executioner]
   type = Transient
   
-  solve_type = JFNK
+  solve_type = PJFNK
   num_steps = 100
   dt = 60
 
@@ -100,12 +100,12 @@
 #  petsc_options_value = '201                hypre    boomeramg      4'
 []  
     
-[Preconditioning]
-  [./smp]
-    type = SMP
-    full = true
-  [../]
-[]
+#[Preconditioning]
+#  [./smp]
+#    type = SMP
+#    full = true
+#  [../]
+#[]
 
 [Outputs]
   exodus = true
