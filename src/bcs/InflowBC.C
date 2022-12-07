@@ -21,8 +21,8 @@ InflowBC::validParams()
 
 InflowBC::InflowBC(const InputParameters & parameters)
   : IntegratedBC(parameters),
-    _velocity_porosity(getMaterialProperty<Real>("velocity_porosity")),
-    _inlet_conc(getParam<Real>("inlet_conc"))
+  _velocity_porosity(getMaterialProperty<Real>("velocity_porosity")),
+  _inlet_conc(getParam<Real>("inlet_conc"))
 {
 }
 
@@ -30,7 +30,7 @@ Real
 InflowBC::computeQpResidual()
 {
 	RealVectorValue velocity(1, 0, 0);
-  return _test[_i][_qp] * _inlet_conc * _velocity_porosity[_qp] * _normals[_qp] * velocity;
+  return _test[_i][_qp] *_u[_qp] *  _inlet_conc * _velocity_porosity[_qp] * _normals[_qp] * velocity;
 }
 
 Real

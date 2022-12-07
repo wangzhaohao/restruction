@@ -16,25 +16,27 @@ InputParameters
 OutflowBC::validParams()
 {
   InputParameters params = IntegratedBC::validParams();
-  params.addRequiredParam<RealVectorValue>("velocity", "The velocity vector");
+  params.addRequiredParam<Real>("outlet_conc", "the outlet concentration");
   return params;
 }
 
 OutflowBC::OutflowBC(const InputParameters & parameters)
   : IntegratedBC(parameters),
-
-    _velocity(getParam<RealVectorValue>("velocity"))
+	_velocity_porosity(getMaterialProperty<Real>("velocity_porosity")),
+  _outlet_conc(getParam<Real>("outlet_conc"))
 {
 }
 
 Real
 OutflowBC::computeQpResidual()
 {
-  return _test[_i][_qp] * _u[_qp] * _velocity * _normals[_qp];
+	RealVectorValue velocity(1, 0, 0);
+  return _test[_i][_qp] * _u[_qp] * _outlet_conc * _velocity_porosity[_qp] * _normals[_qp] * velocity;
 }
 
 Real
 OutflowBC::computeQpJacobian()
 {
-  return _test[_i][_qp] * _phi[_j][_qp] * _velocity * _normals[_qp];
+  RealVectorValue velocity(1, 0, 0);
+  return _test[_i][_qp] * _phi[_j][_qp] *_outlet_conc *  _velocity_porosity[_qp] * _normals[_qp] * velocity;
 }

@@ -19,7 +19,8 @@ public:
   OutflowBC(const InputParameters & parameters);
 
 protected:
-  RealVectorValue _velocity;
+	const MaterialProperty<Real> & _velocity_porosity;
+  Real _outlet_conc;
   virtual Real computeQpResidual();
   virtual Real computeQpJacobian();
 };
