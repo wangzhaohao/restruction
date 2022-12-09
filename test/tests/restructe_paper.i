@@ -7,8 +7,7 @@
     dim = 1
     nx = 500
     ny = 1
-    xmax = 5e-3
-    ymax = 1e-3
+    xmax = 2.675e-3
   []
 []
 
@@ -16,7 +15,7 @@
   [porosity]
     order = FIRST
     family = LAGRANGE
-    initial_condition = 0.05
+    initial_condition = 0.15
   []
 []
 
@@ -87,8 +86,8 @@
   num_steps = 10
   dt = 60
 
-  nl_rel_tol = 1e-6
-  nl_abs_tol = 1e-5
+  nl_rel_tol = 1e-4
+  nl_abs_tol = 1e-4
 
   petsc_options_iname = '-ksp_gmres_restart -pc_type -pc_hypre_type -pc_hypre_boomeramg_max_iter'
   petsc_options_value = '201                hypre    boomeramg      4'
