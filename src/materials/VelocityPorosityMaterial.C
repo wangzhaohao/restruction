@@ -19,7 +19,7 @@ VelocityPorosityMaterial::VelocityPorosityMaterial(const InputParameters & param
   : Material(parameters),
   _temperature(coupledValue("temp")),
   _grad_temperature(coupledGradient("temp")),
-  _velocity_pore(declareProperty<Real>("velocity_pore"))
+  _velocity_pore(declareADProperty<Real>("velocity_pore"))
 {
 }
 

@@ -2,7 +2,7 @@
 // Modeling porosity migration in LWR and fast reactor MOX fuel using the finite element method
 #include "ADVelocityPore.h"
 
-registerMooseObject("RestructedApp", ADVelocityPore);
+registerMooseObject("RestructeApp", ADVelocityPore);
 
 InputParameters
 ADVelocityPore::validParams()
@@ -14,3 +14,13 @@ ADVelocityPore::validParams()
 	return params;
 }
 
+ADVelocityPore::ADVelocityPore(const InputParameters & parameters) : ADKernelGrad(parameters),
+	_velocity_pore(getADMaterialProperty<Real>("velocity_pore"))
+{}
+
+ADRealVectorValue
+ADVelocityPore::precomputeQpResidual()
+{
+	ADRealVectorValue coeff_vector(1, 0, 0); 
+	return coeff_vector * _velocity_pore[_qp] * (1 - _u[_qp]) * _u[_qp];
+}

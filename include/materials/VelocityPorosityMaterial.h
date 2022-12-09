@@ -12,7 +12,7 @@ class VelocityPorosityMaterial : public Material
   protected:
     virtual void computeProperties();
 
-    MaterialProperty<Real> & _velocity_pore;
+    ADMaterialProperty<Real> & _velocity_pore;
     const VariableValue & _temperature;
     const VariableGradient & _grad_temperature;
 };
