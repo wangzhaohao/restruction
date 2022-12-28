@@ -24,8 +24,8 @@ class MOXThermalTempl : public Material
 		const Real _neptunium;//weight fraction
 		const Real _dev_O_M;//stoichiometric deviation (2-x)
 												
-		const GenericVariableValeu<is_ad> & _temperature;
-		const GenericVariableValeu<is_ad> & _porosity;
+		const GenericVariableValue<is_ad> & _temperature;
+		const GenericVariableValue<is_ad> & _porosity;
 
 		GenericMaterialProperty<Real, is_ad> & _thermal_conductivity;
 		GenericMaterialProperty<Real, is_ad> & _specific_heat;

@@ -17,9 +17,9 @@ VelocityPorosityMaterial::validParams()
 
 VelocityPorosityMaterial::VelocityPorosityMaterial(const InputParameters & parameters)
   : Material(parameters),
+  _velocity_pore(declareADProperty<Real>("velocity_pore")),
   _temperature(coupledValue("temp")),
-  _grad_temperature(coupledGradient("temp")),
-  _velocity_pore(declareADProperty<Real>("velocity_pore"))
+  _grad_temperature(coupledGradient("temp"))
 {
 }
 

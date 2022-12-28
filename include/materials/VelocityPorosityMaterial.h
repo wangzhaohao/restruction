@@ -1,7 +1,8 @@
 #pragma once
+
 #include "Material.h"
 
-class Function;
+// class Function;
 
 class VelocityPorosityMaterial : public Material
 {

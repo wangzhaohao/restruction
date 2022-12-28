@@ -33,8 +33,8 @@ ConservativePorosity::validParams()
 
 ConservativePorosity::ConservativePorosity(const InputParameters & parameters)
   : Kernel(parameters),
-		_coeff_vector(getParam<RealVectorValue>("coeff_vector")),
 		_velocity_porosity(getMaterialProperty<Real>("velocity_porosity")),
+		_coeff_vector(getParam<RealVectorValue>("coeff_vector")),
     _upwinding(getParam<MooseEnum>("upwinding_type").getEnum<UpwindingType>()),
     _u_nodal(_var.dofValues()),
     _upwind_node(0),

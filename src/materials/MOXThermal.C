@@ -12,9 +12,9 @@ registerMooseObject("RestructeApp", MOXThermal);
 
 template <bool is_ad>
 InputParameters
-MOXThermalTempl<is_ad>:;validParams()
+MOXThermalTempl<is_ad>::validParams()
 {
-	InputParameters params = Material::vaildParams();
+	InputParameters params = Material::validParams();
 
 	params.addRequiredCoupledVar("tempearture", "Coupled temperature");
 	params.addCoupledVar("porosity", 0, "Coupled porosity");

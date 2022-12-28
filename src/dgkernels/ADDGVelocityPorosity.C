@@ -13,8 +13,8 @@ ADDGVelocityPorosity::validParams()
 
 ADDGVelocityPorosity::ADDGVelocityPorosity(const InputParameters & parameters)
 	: ADDGKernel(parameters),
-	_velocity_porosity(getMaterialProperty<Real>("velocity_porosity")),
-	_velocity(getParam<RealVectorValue>("velocity"))
+	_velocity(getParam<RealVectorValue>("velocity")),
+	_velocity_porosity(getMaterialProperty<Real>("velocity_porosity"))
 {
 }
 
