@@ -12,33 +12,33 @@
 
 registerMooseObject("RestructeApp", ConservativePorosity);
 
-InputParameters
+  InputParameters
 ConservativePorosity::validParams()
 {
   InputParameters params = Kernel::validParams();
   params.addClassDescription("Conservative form of $\\nabla \\cdot \\vec{v} u$ which in its weak "
-                             "form is given by: $(-\\nabla \\psi_i, \\vec{v} u)$.");
-	// params.addRequiredCoupledVar("velocity", "Velocity vector");
-	RealVectorValue coeff_vector(1, 0, 0); // set a defult coefficient vector
-	params.addParam<RealVectorValue>("coeff_vector", coeff_vector, "coefficient vector"); // 测试是否是因为速度变量的类型的关系，个人觉得不是。测试结果没有什么区别（2022.12.02）
-	params.addParam<MaterialPropertyName>("velocity_porosity", 1, "the porosity velocity value(vp)");
+      "form is given by: $(-\\nabla \\psi_i, \\vec{v} u)$.");
+  // params.addRequiredCoupledVar("velocity", "Velocity vector");
+  RealVectorValue coeff_vector(1, 0, 0); // set a defult coefficient vector
+  params.addParam<RealVectorValue>("coeff_vector", coeff_vector, "coefficient vector"); // 测试是否是因为速度变量的类型的关系，个人觉得不是。测试结果没有什么区别（2022.12.02）
+  params.addParam<MaterialPropertyName>("velocity_porosity", 1, "the porosity velocity value(vp)");
   MooseEnum upwinding_type("none full", "none");
   params.addParam<MooseEnum>("upwinding_type",
-                             upwinding_type,
-                             "Type of upwinding used.  None: Typically results in overshoots and "
-                             "undershoots, but numerical diffusion is minimized.  Full: Overshoots "
-                             "and undershoots are avoided, but numerical diffusion is large");
+      upwinding_type,
+      "Type of upwinding used.  None: Typically results in overshoots and "
+      "undershoots, but numerical diffusion is minimized.  Full: Overshoots "
+      "and undershoots are avoided, but numerical diffusion is large");
   return params;
 }
 
 ConservativePorosity::ConservativePorosity(const InputParameters & parameters)
   : Kernel(parameters),
-		_velocity_porosity(getMaterialProperty<Real>("velocity_porosity")),
-		_coeff_vector(getParam<RealVectorValue>("coeff_vector")),
-    _upwinding(getParam<MooseEnum>("upwinding_type").getEnum<UpwindingType>()),
-    _u_nodal(_var.dofValues()),
-    _upwind_node(0),
-    _dtotal_mass_out(0)
+  _velocity_porosity(getMaterialProperty<Real>("velocity_porosity")),
+  _coeff_vector(getParam<RealVectorValue>("coeff_vector")),
+  _upwinding(getParam<MooseEnum>("upwinding_type").getEnum<UpwindingType>()),
+  _u_nodal(_var.dofValues()),
+  _upwind_node(0),
+  _dtotal_mass_out(0)
 {
 }
 
@@ -48,7 +48,7 @@ ConservativePorosity::negSpeedQp() const
   return -_grad_test[_i][_qp] * _velocity_porosity[_qp] * _coeff_vector;
 }
 
-Real
+  Real
 ConservativePorosity::computeQpResidual()
 {
   // This is the no-upwinded version
@@ -56,7 +56,7 @@ ConservativePorosity::computeQpResidual()
   return negSpeedQp() * _u[_qp];
 }
 
-Real
+  Real
 ConservativePorosity::computeQpJacobian()
 {
   // This is the no-upwinded version
@@ -64,7 +64,7 @@ ConservativePorosity::computeQpJacobian()
   return negSpeedQp() * _phi[_j][_qp];
 }
 
-void
+  void
 ConservativePorosity::computeResidual()
 {
   switch (_upwinding)
@@ -78,7 +78,7 @@ ConservativePorosity::computeResidual()
   }
 }
 
-void
+  void
 ConservativePorosity::computeJacobian()
 {
   switch (_upwinding)
@@ -92,7 +92,7 @@ ConservativePorosity::computeJacobian()
   }
 }
 
-void
+  void
 ConservativePorosity::fullUpwind(JacRes res_or_jac)
 {
   // The number of nodes in the element
