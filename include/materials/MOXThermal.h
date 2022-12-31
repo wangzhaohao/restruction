@@ -10,24 +10,24 @@
 template <bool is_ad>
 class MOXThermalTempl : public Material
 {
-	public: 
-		static InputParameters validParams();
+public: 
+  static InputParameters validParams();
 
-		MOXThermalTempl(const InputParameters & parameters);
+  MOXThermalTempl(const InputParameters & parameters);
 
-	protected:
-		virtual void computeProperties();
+protected:
+  virtual void computeProperties();
 
-		const Real _americium;//weight fraction
-		const Real _neptunium;//weight fraction
-		const Real _dev_O_M;//stoichiometric deviation (2-x)
-												
-		const GenericVariableValue<is_ad> & _temperature;
-		const GenericVariableValue<is_ad> & _porosity;
+  const Real _americium;//weight fraction
+  const Real _neptunium;//weight fraction
+  const Real _dev_O_M;//stoichiometric deviation (2-x)
 
-		GenericMaterialProperty<Real, is_ad> & _thermal_conductivity;
-		GenericMaterialProperty<Real, is_ad> & _specific_heat;
-		GenericMaterialProperty<Real, is_ad> & _density;
+  const GenericVariableValue<is_ad> & _temperature;
+  const GenericVariableValue<is_ad> & _porosity;
+
+  GenericMaterialProperty<Real, is_ad> & _thermal_conductivity;
+  GenericMaterialProperty<Real, is_ad> & _specific_heat;
+  GenericMaterialProperty<Real, is_ad> & _density;
 };
 
 typedef MOXThermalTempl<false> MOXThermal;

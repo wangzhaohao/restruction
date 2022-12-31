@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Function.h"
 #include "Kernel.h"
 
 class VelocityPorosityKernel;

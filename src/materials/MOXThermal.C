@@ -24,7 +24,7 @@ MOXThermalTempl<is_ad>::validParams()
 {
 	InputParameters params = Material::validParams();
 
-	params.addRequiredCoupledVar("tempearture", "Coupled temperature");
+	params.addRequiredCoupledVar("temperature", "Coupled temperature");
 	params.addCoupledVar("porosity", 0, "Coupled porosity");
 	params.addParam<Real>("americium", 0, "the americium weight fraction in MOX");
 	params.addParam<Real>("neptunium", 0, "the eptunium weight fraction in MOX");
