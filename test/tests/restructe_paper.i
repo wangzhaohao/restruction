@@ -72,6 +72,10 @@
     type = ParsedFunction
     value = 5/2.675e-3*t
   []
+  [surface_temperature]
+    type = ParsedFunction
+    value = 650+0.065*t
+  []
 []
 
 [Materials]
@@ -89,6 +93,14 @@
   []
 []
 
+[BCs]
+  [surface_temp]
+    type = FunctionDirichletBC
+    function = surface_temperature
+    boundary = right
+    variable = temp
+  []
+[]
 
 [Executioner]
   type = Transient

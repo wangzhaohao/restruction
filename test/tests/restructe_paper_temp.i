@@ -1,4 +1,6 @@
 # this is use the paper Modeling porosity migration in LWR and fast reactor MOX fuel using the finite element method
+# this .i is only to caculate temp
+
 
 [Mesh]
   coord_type = RZ
