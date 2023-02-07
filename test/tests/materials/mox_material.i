@@ -1,5 +1,5 @@
 #Test the MOXMaterial Kato et al
-#the O/M ratio is 2(x = 0) Am = Np = 0
+#Physical Properties and Irradiation Behavior Analysis of Np- and Am-Bearing MOX Fuels
 
 [Mesh]
   type = GeneratedMesh
@@ -15,13 +15,13 @@
   [temp_left]
     type = DirichletBC
     variable = temp
-    value = 300
+    value = 500
     boundary = left
   []
   [temp_right]
     type = DirichletBC
     variable = temp
-    value = 2000
+    value = 2300
     boundary = right
   []
 []
@@ -34,11 +34,11 @@
 [Materials]
   [mox_thermal]
     type = MOXThermal
-    americium = 0
-    neptunium = 0
+    americium = 0.016
+    neptunium = 0.016
     dev_O_M = 2
     temperature = temp
- #   pososity = 0.15
+    porosity = 0
     outputs = all
   []
 []

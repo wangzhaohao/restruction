@@ -10,7 +10,7 @@
 template <bool is_ad>
 class MOXThermalTempl : public Material
 {
-public: 
+public:
   static InputParameters validParams();
 
   MOXThermalTempl(const InputParameters & parameters);
@@ -24,6 +24,10 @@ protected:
 
   const GenericVariableValue<is_ad> & _temperature;
   const GenericVariableValue<is_ad> & _porosity;
+
+  const Real _my_thermal_conductivity;
+  const Real _my_specific_heat;
+  const Real _my_density;
 
   GenericMaterialProperty<Real, is_ad> & _thermal_conductivity;
   GenericMaterialProperty<Real, is_ad> & _specific_heat;

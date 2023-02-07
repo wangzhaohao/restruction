@@ -7,7 +7,7 @@ InputParameters
 VelocityPorosityKernel::validParams()
 {
   InputParameters params = Kernel::validParams();
-	// params.addParam<MaterialPropertyName>("velocity_porosity", "velocity_porosity", "the porosity velociy");
+  params.addParam<MaterialPropertyName>("velocity_porosity", "velocity_porosity", "the porosity velociy");
 	RealVectorValue vp(1, 0, 0);
 	params.addParam<RealVectorValue>("vp", vp, "the velocity (default is (1, 0, 0))");
 	params.addParam<MaterialPropertyName>("velocity_porosity", 1., "the velocity of porosity.");

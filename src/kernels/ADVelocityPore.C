@@ -7,11 +7,11 @@ registerMooseObject("RestructeApp", ADVelocityPore);
 InputParameters
 ADVelocityPore::validParams()
 {
-	auto params = ADKernelGrad::validParams();
+  auto params = ADKernelGrad::validParams();
 
-	params.addParam<MaterialPropertyName>("velocity_pore", 1., "the velocity of pore");
-	params.addClassDescription("the kernel is to calcate the porosity convection");
-	return params;
+  params.addParam<MaterialPropertyName>("velocity_pore","velocity_pore", "the velocity of pore");
+  params.addClassDescription("the kernel is to calcate the porosity convection");
+  return params;
 }
 
 ADVelocityPore::ADVelocityPore(const InputParameters & parameters) : ADKernelGrad(parameters),
@@ -21,6 +21,6 @@ ADVelocityPore::ADVelocityPore(const InputParameters & parameters) : ADKernelGra
 ADRealVectorValue
 ADVelocityPore::precomputeQpResidual()
 {
-	ADRealVectorValue coeff_vector(1, 0, 0); 
-	return coeff_vector * _velocity_pore[_qp] * (1 - _u[_qp]) * _u[_qp];
+  ADRealVectorValue coeff_vector(1, 0, 0); 
+  return coeff_vector * std::abs(_velocity_pore[_qp]) * (1 - _u[_qp]) * _u[_qp];
 }

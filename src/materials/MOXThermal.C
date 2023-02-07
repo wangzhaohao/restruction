@@ -30,6 +30,10 @@ MOXThermalTempl<is_ad>::validParams()
 	params.addParam<Real>("neptunium", 0, "the eptunium weight fraction in MOX");
 	params.addParam<Real>("dev_O_M", 0, "the stoichiomertic deviation");
 
+  params.addParam<Real>("thermal_conductivity", "the thermal conductivity value");
+  params.addParam<Real>("specific_heat", "the specific heat value of MOX");
+  params.addParam<Real>("density", "the density value of MOX");
+
   return params;
 }
 
@@ -41,6 +45,10 @@ MOXThermalTempl<is_ad>::MOXThermalTempl(const InputParameters & parameters) : Ma
 
 	_temperature(coupledGenericValue<is_ad>("temperature")),
   _porosity(coupledGenericValue<is_ad>("porosity")),
+  _my_thermal_conductivity(isParamValid("thermal_conductivity") ? getParam<Real>("thermal_conductivity") : 0),
+  _my_specific_heat(isParamValid("specific_heat") ? getParam<Real>("specific_heat") : 0),
+  _my_density(isParamValid("density") ? getParam<Real>("density") : 0),
+
   _thermal_conductivity(declareGenericProperty<Real, is_ad>("thermal_conductivity")),
   _specific_heat(declareGenericProperty<Real, is_ad>("specific_heat")),
   _density(declareGenericProperty<Real, is_ad>("density"))
@@ -66,22 +74,32 @@ MOXThermalTempl<is_ad>::computeProperties()
       mooseWarning(msg.str());
       qp_temperature = 0;
    }
- //the heat conduction model is Kato 
-   auto qp_porosity = _porosity[qp];
-   if (qp_porosity > 0.95)
-     qp_temperature = 0.95;
-   
-   auto correction_porosity = (1 - qp_porosity)/(1 + qp_porosity/2);
+   if (isParamValid("thermal_conductivity"))
+   {
+     _thermal_conductivity[qp] = _my_thermal_conductivity;
+   }
+   else
+   {
+     //the heat conduction model is Kato 
+     auto qp_porosity = _porosity[qp];
+     if (qp_porosity > 0.95)
+       qp_porosity = 0.95;
 
-   auto correction_composition = 1.595e-2 + 2.713 * (2 - _dev_O_M) + (3.583e-1*_americium) + (6.317e-2*_neptunium) + (-2.625*(2 - _dev_O_M) + 2.493)*1e-4*qp_temperature;
-   
-   _thermal_conductivity[qp] = correction_porosity * (1.541e11/std::pow(qp_temperature, 2.5)) * std::exp(-1.522e4/qp_temperature) / correction_composition;
+     auto correction_porosity = (1 - qp_porosity)/(1 + qp_porosity/2);
+     /*std::cout<<correction_porosity<<std::endl;*/
+
+     auto correction_composition = 1.595e-2 + 2.713 * (2 - _dev_O_M) + (3.583e-1 * _americium) + (6.317e-2 * _neptunium) + (-2.625 * (2 - _dev_O_M) + 2.493) * 1e-4 * qp_temperature;
+
+     /*std::cout<<correction_composition<<std::endl;*/
+
+     _thermal_conductivity[qp] = correction_porosity *( (1.541e11 / std::pow(qp_temperature, 2.5)) * std::exp(-1.522e4 / qp_temperature) + 1 / correction_composition);
+   }
 
   //specific heat
-  _specific_heat[qp] = 120; //J/K-kg
+  _specific_heat[qp] = _my_specific_heat; //J/K-kg
 
   //density
-  _density[qp] = 1.0662e4; //kg/m^3
+  _density[qp] = _my_density; //kg/m^3
  }
 }
 

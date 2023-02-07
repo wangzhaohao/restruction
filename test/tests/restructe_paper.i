@@ -5,7 +5,7 @@
   [block]
     type = GeneratedMeshGenerator
     dim = 1
-    nx = 500
+    nx = 200
     ny = 1
     xmax = 2.675e-3
   []
@@ -41,6 +41,7 @@
     type = MOXHeatSource
     variable = temp
     function = volumetric_heat
+    porosity_initial = 0.15
   []
   [heat_conduction]
     type = HeatConduction
@@ -59,7 +60,7 @@
   []
 []
 
-[AuxKernels] 
+[AuxKernels]
   [velocity_porosity_aux]
     type = ADMaterialRealAux
     property = velocity_pore
@@ -70,11 +71,11 @@
 [Functions]
   [volumetric_heat]
     type = ParsedFunction
-    value = 5/2.675e-3*t
+    expression = (5/pi*2.675^2)*1e10*t
   []
   [surface_temperature]
     type = ParsedFunction
-    value = 650+0.065*t
+    expression = 650+0.065*t
   []
 []
 
@@ -90,6 +91,9 @@
     neptunium = 0
     dev_O_M = 2
     porosity = porosity
+    density = 1.0662e4
+    specific_heat = 0.4444
+    outputs = all
   []
 []
 
